@@ -13,8 +13,6 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-
-
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
