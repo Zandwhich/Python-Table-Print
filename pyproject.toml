@@ -2,7 +2,7 @@
 name = "python-table-print"
 version = "0.0.1"
 authors = [
-    {"name" = "Alex Zdanowicz"}
+    {"name" = "Centauri_Prime"}
 ]
 description = "Allows for pretty printing and automatic resizing of tables."
 readme = "README.md"
