@@ -14,7 +14,7 @@ classifiers = [
 ]
 
 [build-system]
-requires = ["setuptools", "isort", "black"]
+requires = ["setuptools", "isort", "black", "pytest"]
 build-backend = "setuptools.build_meta"
 
 [tool.isort]
