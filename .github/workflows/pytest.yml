@@ -6,7 +6,7 @@ on:
             [develop, staging, master]
 
 jobs:
-    lint:
+    test:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
