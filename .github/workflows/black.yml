@@ -2,7 +2,8 @@ name: Lint
 
 on:
     pull_request:
-        types: [opened, reopened, edited]
+        branches:
+            [develop, staging, master]
 
 jobs:
     lint:
