@@ -11,7 +11,7 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
-            - name: Setup Python
+            - name: Setup Python (with pip cache)
               uses: actions/setup-python@v5
               with:
                 cache: 'pip' # caching pip dependencies
