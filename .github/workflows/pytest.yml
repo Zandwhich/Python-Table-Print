@@ -1,21 +1,25 @@
 name: Test
 
 on:
-    pull_request:
-        branches:
-            [develop, staging, master]
+  workflow_dispatch:
+  push:
+    branches:
+      [develop, staging, master]
+  pull_request:
+    branches:
+      [develop, staging, master]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-            - name: Setup Python (with pip cache)
-              uses: actions/setup-python@v5
-              with:
-                cache: 'pip' # caching pip dependencies
-            - name: Install dependencies
-              run: pip install -r requirements.txt
-            - name: Run Pytest
-              run: pytest
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Python (with pip cache)
+        uses: actions/setup-python@v5
+        with:
+          cache: 'pip' # caching pip dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run Pytest
+        run: pytest

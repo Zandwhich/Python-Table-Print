@@ -1,17 +1,21 @@
 name: Lint
 
 on:
-    pull_request:
-        branches:
-            [develop, staging, master]
+  workflow_dispatch:
+  push:
+    branches:
+      [develop, staging, master]
+  pull_request:
+    branches:
+      [develop, staging, master]
 
 jobs:
-    lint:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-            - name: Run Black
-              uses: psf/black@stable
-              with:
-                options: "--check --verbose"
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run Black
+        uses: psf/black@stable
+        with:
+          options: "--check --verbose"
