@@ -1,4 +1,4 @@
-BASE_BORDER = '*'
+BASE_BORDER = "*"
 
 
 def print_header(*row: str) -> None:
@@ -24,12 +24,12 @@ def print_header(*row: str) -> None:
 
     print(BASE_BORDER * total_border_length)
 
-    print(BASE_BORDER, end='')
+    print(BASE_BORDER, end="")
     for col_i in row:
         if len(col_i) > 0:
-            print(' ' + col_i + ' ' + BASE_BORDER, end='')
+            print(" " + col_i + " " + BASE_BORDER, end="")
         else:
-            print(' ' + BASE_BORDER, end='')
+            print(" " + BASE_BORDER, end="")
     print()
 
     print(BASE_BORDER * total_border_length)

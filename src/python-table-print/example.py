@@ -1,3 +1,3 @@
 from table import print_header
 
-print_header('this', 'is', 'a', '', 'test')
+print_header("this", "is", "a", "", "test")
