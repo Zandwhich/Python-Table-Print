@@ -34,7 +34,6 @@ class PrintTable:
         print(BASE_BORDER * self._total_border_length())
 
     def _print_header(self, header: tuple[str, ...]) -> None:
-        self._print_border_row()
         self._print_row(header)
         self._print_border_row()
 
@@ -60,6 +59,8 @@ class PrintTable:
             # TODO: Throw an error here
             print("ERROR: No text passed in for the table")
             return
+        
+        self._print_border_row()
 
         if self.has_header_row:
             self._print_header(self._text[0])
