@@ -1,1 +1,1 @@
-from table import PrintTable
+from .table import PrintTable
