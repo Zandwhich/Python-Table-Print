@@ -44,25 +44,29 @@ class PrintTable:
                 row += " " + BASE_BORDER
                 continue
 
-            row += " " * (self._max_column_lengths[col_i] - len(columns[col_i]) + 1) + columns[col_i] + " " + BASE_BORDER
-        
+            row += (
+                " " * (self._max_column_lengths[col_i] - len(columns[col_i]) + 1)
+                + columns[col_i]
+                + " "
+                + BASE_BORDER
+            )
+
         return row + "\n"
-    
+
     def get_table(self) -> str:
         if len(self._text) == 0:
             # TODO: Throw an error here
             return "ERROR: No text passed in for the table"
-        
+
         table = self._get_border_row()
-        
+
         if self.has_header_row:
             table += self._get_header(self._text[0])
-        
+
         for r_row in range(1 if self.has_header_row else 0, len(self._text)):
             table += self._get_row(self._text[r_row])
-        
+
         return table + self._get_border_row()
-        
 
     def print_table(self) -> None:
         print(self.get_table())
