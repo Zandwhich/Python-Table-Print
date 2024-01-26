@@ -59,7 +59,7 @@ class PrintTable:
             # TODO: Throw an error here
             print("ERROR: No text passed in for the table")
             return
-        
+
         self._print_border_row()
 
         if self.has_header_row:
