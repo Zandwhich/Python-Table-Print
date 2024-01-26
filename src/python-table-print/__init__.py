@@ -1,1 +1,1 @@
-from table import print_header
+from table import PrintTable
