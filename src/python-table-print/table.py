@@ -1,7 +1,7 @@
-BASE_BORDER = "*"
+BASE_BORDER = '*'
 
 
-def print_row(*row: str) -> None:
+def print_header(*row: str) -> None:
     max_column_lengths = []
 
     for col_i in range(0, len(row)):
@@ -24,9 +24,12 @@ def print_row(*row: str) -> None:
 
     print(BASE_BORDER * total_border_length)
 
-    print(BASE_BORDER, end="")
+    print(BASE_BORDER, end='')
     for col_i in row:
-        print(" " + col_i + " " + BASE_BORDER, end="")
+        if len(col_i) > 0:
+            print(' ' + col_i + ' ' + BASE_BORDER, end='')
+        else:
+            print(' ' + BASE_BORDER, end='')
     print()
 
     print(BASE_BORDER * total_border_length)
