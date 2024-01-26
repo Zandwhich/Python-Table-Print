@@ -30,42 +30,39 @@ class PrintTable:
 
         return total_border_length + 1
 
-    def _print_border_row(self) -> None:
-        print(BASE_BORDER * self._total_border_length())
+    def _get_border_row(self) -> str:
+        return BASE_BORDER * self._total_border_length() + "\n"
 
-    def _print_header(self, header: tuple[str, ...]) -> None:
-        self._print_row(header)
-        self._print_border_row()
+    def _get_header(self, header: tuple[str, ...]) -> str:
+        header = self._get_row(header) + "\n"
+        return header + self._get_border_row()
 
-    def _print_row(self, row: tuple[str, ...]) -> None:
-        print(BASE_BORDER, end="")
-        for col_i in range(0, len(row)):
+    def _get_row(self, columns: tuple[str, ...]) -> str:
+        row = BASE_BORDER
+        for col_i in range(0, len(columns)):
             if self._max_column_lengths[col_i] == 0:
-                print(" " + BASE_BORDER, end="")
+                row += " " + BASE_BORDER
                 continue
 
-            print(
-                " " * (self._max_column_lengths[col_i] - len(row[col_i]) + 1)
-                + row[col_i]
-                + " "
-                + BASE_BORDER,
-                end="",
-            )
-
-        print()
-
-    def print_table(self) -> None:
+            row += " " * (self._max_column_lengths[col_i] - len(columns[col_i]) + 1) + columns[col_i] + " " + BASE_BORDER
+        
+        return row + "\n"
+    
+    def get_table(self) -> str:
         if len(self._text) == 0:
             # TODO: Throw an error here
-            print("ERROR: No text passed in for the table")
-            return
-
-        self._print_border_row()
-
+            return "ERROR: No text passed in for the table"
+        
+        table = self._get_border_row()
+        
         if self.has_header_row:
-            self._print_header(self._text[0])
-
+            table += self._get_header(self._text[0])
+        
         for r_row in range(1 if self.has_header_row else 0, len(self._text)):
-            self._print_row(self._text[r_row])
+            table += self._get_row(self._text[r_row])
+        
+        return table + self._get_border_row()
+        
 
-        self._print_border_row()
+    def print_table(self) -> None:
+        print(self.get_table())
