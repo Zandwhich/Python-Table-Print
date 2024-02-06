@@ -33,8 +33,8 @@ class PrintTable:
     def _get_border_row(self) -> str:
         return BASE_BORDER * self._total_border_length() + "\n"
 
-    def _get_header(self, header: tuple[str, ...]) -> str:
-        header = self._get_row(header)
+    def _get_header(self, header_text: tuple[str, ...]) -> str:
+        header = self._get_row(header_text)
         return header + self._get_border_row()
 
     def _get_row(self, columns: tuple[str, ...]) -> str:
