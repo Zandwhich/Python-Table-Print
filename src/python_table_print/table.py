@@ -40,14 +40,18 @@ class PrintTable:
     def _get_row(self, columns: tuple[str, ...]) -> str:
         row = BASE_BORDER
         for col_i in range(0, len(self._max_column_lengths)):
-            
             # Edge case if there is nothing for this column
             if self._max_column_lengths[col_i] == 0:
                 row += " " + BASE_BORDER
                 continue
 
             row += (
-                " " * (self._max_column_lengths[col_i] - (len(columns[col_i]) if col_i < len(columns) else 0) + 1)
+                " "
+                * (
+                    self._max_column_lengths[col_i]
+                    - (len(columns[col_i]) if col_i < len(columns) else 0)
+                    + 1
+                )
                 + (columns[col_i] if col_i < len(columns) else "")
                 + " "
                 + BASE_BORDER
