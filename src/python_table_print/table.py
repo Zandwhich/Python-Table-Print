@@ -1,10 +1,19 @@
+from enum import Enum
+
+
 BASE_BORDER = "*"
 
 
 class PrintTable:
+    class Justification(Enum):
+        RIGHT = 0
+        CENTRE = 1
+        LEFT = 2
+    
     def __init__(self) -> None:
         self.has_header_row = True
 
+        # TODO: Turn this into a dict to store more data about the table and allow for more granular changes
         self._max_column_lengths = []
         self._text = []
 
