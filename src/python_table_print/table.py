@@ -9,7 +9,7 @@ class PrintTable:
         RIGHT = 0
         CENTRE = 1
         LEFT = 2
-    
+
     def __init__(self) -> None:
         self.has_header_row = True
 
