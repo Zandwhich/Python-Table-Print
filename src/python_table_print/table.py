@@ -91,7 +91,7 @@ class PrintTable:
         self._rows: dict[int, _Row] = {}
         self._border_character = BASE_BORDER
 
-    def _check_and_increase_max_column_length(self, column: int, length: int) -> None:
+    def _check_and_increase_max_column_length(self, column_i: int, length: int) -> None:
         """Takes in the column number and the length of the new string at that column and changes the length to the given length if longer, or if that column doesn't yet exist.
 
         Args:
@@ -99,13 +99,14 @@ class PrintTable:
             length (int): The length of the new string
         """
         # If there is no column for this yet, add one
-        if column > len(self._columns):
-            self._columns[column].max_length = length
+        if column_i >= len(self._columns):
+            self._columns[column_i] = _Column()
+            self._columns[column_i].max_length = length
             return
 
         # Check if this length is longer than the currently stored one. If so, update
-        if length > self._columns[column].max_length:
-            self._columns[column].max_length = length
+        if length > self._columns[column_i].max_length:
+            self._columns[column_i].max_length = length
 
     def _total_border_length(self) -> int:
         """Figures out the length of the table
