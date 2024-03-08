@@ -1,4 +1,20 @@
 {
     "python.analysis.autoImportCompletions": true,
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": [
+                    //"variable.language.special.self.python",
+                    "variable.parameter.function.language.special.self.python",
+                    //"variable.language.special.cls.python",
+                    //"variable.parameter.function.language.special.cls.python"
+                ],
+                "settings": {
+                    "fontStyle": "italic",
+                    "foreground": "#658ABB"
+                }
+            }
+        ]
+    }
 }
