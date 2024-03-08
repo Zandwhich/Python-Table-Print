@@ -6,6 +6,17 @@ from typing import Sequence
 BASE_BORDER = "*"
 
 
+# TODO: You finished with implementing the logic for the right/left/centre justification printing out
+#       But you still need to actually implement a function that exposes that from the table side of things.
+#       And then see if you can clean up the code more, specifically breaking it down into smaller functinos
+#       And then do more tests for that
+#       And then do more doco in code
+#       And then do more examples with the new code you just wrote
+#       And then update the README
+#       AND THEN INCREMENT THE VERSION NUMBER!!!!!
+#       And then get rid of the develop branch? (Is it overkill for this project?)
+
+
 class Justification(Enum):
     RIGHT = 0
     CENTRE = 1
