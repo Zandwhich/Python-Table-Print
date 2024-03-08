@@ -12,7 +12,6 @@ BASE_BORDER = "*"
 #       And then do more doco in code
 #       And then do more examples with the new code you just wrote
 #       And then update the README
-#       AND THEN INCREMENT THE VERSION NUMBER!!!!!
 #       And then get rid of the develop branch? (Is it overkill for this project?)
 
 
