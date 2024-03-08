@@ -1,6 +1,6 @@
 [project]
 name = "python-table-print"
-version = "0.1.5"
+version = "0.2"
 authors = [
     {"name" = "Centauri_Prime"}
 ]

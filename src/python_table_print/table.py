@@ -7,7 +7,6 @@ BASE_BORDER = "*"
 
 
 # TODO: You finished with implementing the logic for the right/left/centre justification printing out
-#       But you still need to actually implement a function that exposes that from the table side of things.
 #       And then see if you can clean up the code more, specifically breaking it down into smaller functinos
 #       And then do more tests for that
 #       And then do more doco in code
@@ -18,12 +17,16 @@ BASE_BORDER = "*"
 
 
 class Justification(Enum):
+    """An enum used for justifying text in the table"""
+
     RIGHT = 0
     CENTRE = 1
     LEFT = 2
 
 
 class _Cell:
+    """The basic building block of the table that stores the text and the justification of itself"""
+
     def __init__(self, text: str, justification: Justification | None = None) -> None:
         self.justification: Justification | None = justification
         self.text = text
@@ -57,17 +60,21 @@ class _Cell:
                 + border_character
             )
 
-        # TODO: Raise a "Justification not implemented" execption
+        # TODO: Raise a "Justification not implemented" exception
         else:
             raise Exception
 
 
 class _Column:
+    """An abstraction of the column of the table, which holds information about the column"""
+
     def __init__(self) -> None:
         self.max_length = 0
 
 
 class _Row:
+    """An abstraction of the row of the table, which holds each of the cells in that row of the table"""
+
     def __init__(self, *row: str, justification: Justification | None = None) -> None:
         self.cells: dict[int, _Cell] = {}
 
@@ -150,6 +157,18 @@ class PrintTable:
             self._check_and_increase_max_column_length(col_i, len(row[col_i]))
 
         self._rows[len(self._rows)] = _Row(*row)
+
+    def set_table_justification(self, justification: Justification) -> None:
+        for row in self._rows.values():
+            row.set_justification_for_cells(justification)
+
+    def set_row_justification(self, row_i: int, justification: Justification) -> None:
+        self._rows[row_i].set_justification_for_cells(justification)
+
+    def set_cell_justification(
+        self, row_i: int, column_i: int, justificaiton: Justification
+    ) -> None:
+        self._rows[row_i].cells[column_i].justification = justificaiton
 
     def get_table(self) -> str:
         if len(self._rows) == 0:
