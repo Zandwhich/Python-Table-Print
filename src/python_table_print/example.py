@@ -8,4 +8,4 @@ table.add_row("Another entry", "yay", "an entry in the table")
 table.add_row("Fun times", "This is kinda cool", "wooow")
 table.has_header_row = True
 
-table.print_table()
+print(table.get_table())

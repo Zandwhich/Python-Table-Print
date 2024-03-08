@@ -1,87 +1,155 @@
 from enum import Enum
+from math import ceil, floor
+from typing import Sequence
 
 
 BASE_BORDER = "*"
 
 
-class PrintTable:
-    class Justification(Enum):
-        RIGHT = 0
-        CENTRE = 1
-        LEFT = 2
+class Justification(Enum):
+    RIGHT = 0
+    CENTRE = 1
+    LEFT = 2
 
+
+class _Cell:
+    def __init__(self, text: str, justification: Justification | None = None) -> None:
+        self.justification: Justification | None = justification
+        self.text = text
+
+    def get_cell_as_string(self, max_length: int, border_character: str) -> str:
+        # Edge case if there is nothing for this column
+        if max_length == 0:
+            return " " + border_character
+
+        if self.justification == None or self.justification == Justification.RIGHT:
+            return (
+                " " * (max_length - len(self.text) + 1)
+                + self.text
+                + " "
+                + border_character
+            )
+
+        if self.justification == Justification.LEFT:
+            return (
+                " "
+                + self.text
+                + (" " * (max_length - len(self.text) + 1))
+                + border_character
+            )
+
+        if self.justification == Justification.CENTRE:
+            return (
+                " " * (floor((max_length - len(self.text)) / 2) + 1)
+                + self.text
+                + " " * (ceil((max_length - len(self.text)) / 2) + 1)
+                + border_character
+            )
+
+        # TODO: Raise a "Justification not implemented" execption
+        else:
+            raise Exception
+
+
+class _Column:
     def __init__(self) -> None:
-        self.has_header_row = True
+        self.max_length = 0
 
-        # TODO: Turn this into a dict to store more data about the table and allow for more granular changes
-        self._max_column_lengths = []
-        self._text = []
 
-    def add_row(self, *row: str) -> None:
-        for col_i in range(0, len(row)):
-            if (
-                len(row[col_i]) > self._max_column_lengths[col_i]
-                if col_i < len(self._max_column_lengths)
-                else -1
-            ):
-                if col_i < len(self._max_column_lengths):
-                    self._max_column_lengths[col_i] = len(row[col_i])
-                else:
-                    self._max_column_lengths += [len(row[col_i])]
+class _Row:
+    def __init__(self, *row: str, justification: Justification | None = None) -> None:
+        self.cells: dict[int, _Cell] = {}
 
-        self._text += [row]
+        for i in range(0, len(row)):
+            self.cells[i] = _Cell(row[i], justification)
+
+    def set_justification_for_cells(self, justification: Justification | None) -> None:
+        for cell in self.cells.values():
+            cell.justification = justification
+
+    def get_row_as_string(
+        self, border_character: str, max_lengths: Sequence[int]
+    ) -> str:
+        final_row = border_character
+
+        for i in range(0, len(max_lengths)):
+            if i < len(self.cells):
+                final_row += self.cells[i].get_cell_as_string(
+                    max_lengths[i], border_character
+                )
+
+            else:
+                final_row += " " * (max_lengths[i] + 2) + border_character
+
+        return final_row + "\n"
+
+
+class PrintTable:
+    def __init__(self) -> None:
+        self.has_header_row: bool = True
+        self._columns: dict[int, _Column] = {}
+        self._rows: dict[int, _Row] = {}
+        self._border_character = BASE_BORDER
+
+    def _check_and_increase_max_column_length(self, column: int, length: int) -> None:
+        """Takes in the column number and the length of the new string at that column and changes the length to the given length if longer, or if that column doesn't yet exist.
+
+        Args:
+            column (int): The column at which this is ocurring
+            length (int): The length of the new string
+        """
+        # If there is no column for this yet, add one
+        if column > len(self._columns):
+            self._columns[column].max_length = length
+            return
+
+        # Check if this length is longer than the currently stored one. If so, update
+        if length > self._columns[column].max_length:
+            self._columns[column].max_length = length
 
     def _total_border_length(self) -> int:
+        """Figures out the length of the table
+
+        Returns:
+            int: The length of the table
+        """
         total_border_length = 0
 
-        for col_len in self._max_column_lengths:
-            total_border_length += col_len + 3 if not col_len == 0 else 2
+        for col_len in self._columns.values():
+            total_border_length += (
+                col_len.max_length + 3 if not col_len.max_length == 0 else 2
+            )
 
         return total_border_length + 1
 
     def _get_border_row(self) -> str:
         return BASE_BORDER * self._total_border_length() + "\n"
 
-    def _get_header(self, header_text: tuple[str, ...]) -> str:
-        header = self._get_row(header_text)
-        return header + self._get_border_row()
+    def _get_header(self, row: _Row, border_character: str) -> str:
+        return self._get_row(row, border_character) + self._get_border_row()
 
-    def _get_row(self, columns: tuple[str, ...]) -> str:
-        row = BASE_BORDER
-        for col_i in range(0, len(self._max_column_lengths)):
-            # Edge case if there is nothing for this column
-            if self._max_column_lengths[col_i] == 0:
-                row += " " + BASE_BORDER
-                continue
+    def _get_row(self, row: _Row, border_character: str) -> str:
+        return row.get_row_as_string(
+            border_character, [column.max_length for column in self._columns.values()]
+        )
 
-            row += (
-                " "
-                * (
-                    self._max_column_lengths[col_i]
-                    - (len(columns[col_i]) if col_i < len(columns) else 0)
-                    + 1
-                )
-                + (columns[col_i] if col_i < len(columns) else "")
-                + " "
-                + BASE_BORDER
-            )
+    def add_row(self, *row: str) -> None:
+        for col_i in range(0, len(row)):
+            self._check_and_increase_max_column_length(col_i, len(row[col_i]))
 
-        return row + "\n"
+        self._rows[len(self._rows)] = _Row(*row)
 
     def get_table(self) -> str:
-        if len(self._text) == 0:
-            # TODO: Throw an error here
-            return "ERROR: No text passed in for the table"
+        if len(self._rows) == 0:
+            # TODO: Throw a "table has no length" exception
+            raise Exception
 
         table = self._get_border_row()
 
         if self.has_header_row:
-            table += self._get_header(self._text[0])
+            table += self._get_header(self._rows[0], self._border_character)
 
-        for r_row in range(1 if self.has_header_row else 0, len(self._text)):
-            table += self._get_row(self._text[r_row])
+        for i in range(1 if self.has_header_row else 0, len(self._rows)):
+            table += self._get_row(self._rows[i], self._border_character)
 
         return table + self._get_border_row()
-
-    def print_table(self) -> None:
-        print(self.get_table())
