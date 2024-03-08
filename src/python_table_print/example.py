@@ -1,4 +1,4 @@
-from table import PrintTable
+from table import PrintTable, Justification
 
 table = PrintTable()
 
