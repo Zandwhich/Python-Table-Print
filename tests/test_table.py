@@ -77,7 +77,7 @@ def test_basic_no_header():
 # Justification Tests
 
 
-def test_table_right_justification():
+def test_table_row_right_justification():
     table = PrintTable()
 
     table.add_row("Col 1", "Col 2", "Col 3")
@@ -99,7 +99,7 @@ def test_table_right_justification():
     )
 
 
-def test_table_left_justification():
+def test_table_row_left_justification():
     table = PrintTable()
 
     table.add_row("Col 1", "Col 2", "Col 3")
@@ -122,7 +122,7 @@ def test_table_left_justification():
     )
 
 
-def test_table_centre_justification():
+def test_table_row_centre_justification():
     table = PrintTable()
 
     table.add_row("Col 1", "Col 2", "Col 3")
