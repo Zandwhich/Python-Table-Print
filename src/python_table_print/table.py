@@ -7,7 +7,8 @@ BASE_BORDER = "*"
 
 
 # TODO: You finished with implementing the logic for the right/left/centre justification printing out
-#       And then see if you can clean up the code more, specifically breaking it down into smaller functinos
+#       And then see if you can add the logic for justifying on the column
+#       And then see if you can clean up the code more, specifically breaking it down into smaller functions
 #       And then do more tests for that
 #       And then do more doco in code
 #       And then do more examples with the new code you just wrote
@@ -31,6 +32,18 @@ class _Cell:
         self.text = text
 
     def get_cell_as_string(self, max_length: int, border_character: str) -> str:
+        """Returns the cell in string format with the correct formatting.
+
+        Args:
+            max_length (int): The max length of a cell in that column.
+            border_character (str): The character to be used on the border at the sides
+
+        Raises:
+            Exception: If there is an incorrect/unsupported justification
+
+        Returns:
+            str: The cell as a string with the correct justicication in place
+        """
         # Edge case if there is nothing for this column
         if max_length == 0:
             return " " + border_character
@@ -81,12 +94,27 @@ class _Row:
             self.cells[i] = _Cell(row[i], justification)
 
     def set_justification_for_cells(self, justification: Justification | None) -> None:
+        """Sets the justification for all of the cells in the row
+
+        Args:
+            justification (Justification | None): The justification to set the cells to. If `None` is passed in, it sets the justificaiton to the default,
+            which currently is the right justification.
+        """
         for cell in self.cells.values():
             cell.justification = justification
 
     def get_row_as_string(
         self, border_character: str, max_lengths: Sequence[int]
     ) -> str:
+        """Returns the row as a string
+
+        Args:
+            border_character (str): The border character that is being used for the table
+            max_lengths (Sequence[int]): The max lengths for all of the columns
+
+        Returns:
+            str: _description_
+        """
         final_row = border_character
 
         for i in range(0, len(max_lengths)):
@@ -102,8 +130,11 @@ class _Row:
 
 
 class PrintTable:
+    """The table itself. More documentation to come!"""
     def __init__(self) -> None:
         self.has_header_row: bool = True
+        
+        # TODO: Is a dictionary whose keys are ints essentially a list in Python?
         self._columns: dict[int, _Column] = {}
         self._rows: dict[int, _Row] = {}
         self._border_character = BASE_BORDER
@@ -141,35 +172,75 @@ class PrintTable:
         return total_border_length + 1
 
     def _get_border_row(self) -> str:
+        """Creates the 'border row', or the top and botom row of the table made up of only border characters
+
+        Returns:
+            str: The border row made up of only border characters
+        """
         return BASE_BORDER * self._total_border_length() + "\n"
 
     def _get_header(self, row: _Row, border_character: str) -> str:
-        return self._get_row(row, border_character) + self._get_border_row()
+        """Creates the 'header rows', which is the row of text sandwiched between two border rows
 
-    def _get_row(self, row: _Row, border_character: str) -> str:
-        return row.get_row_as_string(
-            border_character, [column.max_length for column in self._columns.values()]
-        )
+        Args:
+            row (_Row): The row of text to sandwich between the border rows
+            border_character (str): The border character 
+
+        Returns:
+            str: The row of text sandwiched between two border rows
+        """
+        return row.get_row_as_string(border_character, [column.max_length for column in self._columns.values()])
 
     def add_row(self, *row: str) -> None:
+        """Adds another row to the bottom of the table
+        
+        Args:
+            row (*str): The next row of text to be added to the table
+        """
         for col_i in range(0, len(row)):
             self._check_and_increase_max_column_length(col_i, len(row[col_i]))
 
         self._rows[len(self._rows)] = _Row(*row)
 
     def set_table_justification(self, justification: Justification) -> None:
+        """Sets the justification for the whole table. Overrides any previous justification that was set
+
+        Args:
+            justification (Justification): The justification for the table
+        """
         for row in self._rows.values():
             row.set_justification_for_cells(justification)
 
     def set_row_justification(self, row_i: int, justification: Justification) -> None:
+        """Sets the justification for the row in the table. Overrides any previous justification for that row that was set.
+
+        Args:
+            row_i (int): The row to justify.
+            justification (Justification): The justification for the row
+        """
         self._rows[row_i].set_justification_for_cells(justification)
 
     def set_cell_justification(
         self, row_i: int, column_i: int, justificaiton: Justification
     ) -> None:
+        """Sets the justification for a specific cell in the table. Overrides any previous justification for that cell that was set.
+
+        Args:
+            row_i (int): The row that the cell is in.
+            column_i (int): The column that the cell is in.
+            justificaiton (Justification): The justification for the cell.
+        """
         self._rows[row_i].cells[column_i].justification = justificaiton
 
     def get_table(self) -> str:
+        """Returns the current table as a string
+
+        Raises:
+            Exception: If there is no data, throws an exception. TODO: Create the actual exception for this.
+
+        Returns:
+            str: The currenct table
+        """
         if len(self._rows) == 0:
             # TODO: Throw a "table has no length" exception
             raise Exception
@@ -180,6 +251,6 @@ class PrintTable:
             table += self._get_header(self._rows[0], self._border_character)
 
         for i in range(1 if self.has_header_row else 0, len(self._rows)):
-            table += self._get_row(self._rows[i], self._border_character)
+            table += self._rows[i].get_row_as_string(self._border_character, [column.max_length for column in self._columns.values()])
 
         return table + self._get_border_row()
