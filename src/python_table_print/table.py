@@ -131,9 +131,10 @@ class _Row:
 
 class PrintTable:
     """The table itself. More documentation to come!"""
+
     def __init__(self) -> None:
         self.has_header_row: bool = True
-        
+
         # TODO: Is a dictionary whose keys are ints essentially a list in Python?
         self._columns: dict[int, _Column] = {}
         self._rows: dict[int, _Row] = {}
@@ -184,16 +185,18 @@ class PrintTable:
 
         Args:
             row (_Row): The row of text to sandwich between the border rows
-            border_character (str): The border character 
+            border_character (str): The border character
 
         Returns:
             str: The row of text sandwiched between two border rows
         """
-        return row.get_row_as_string(border_character, [column.max_length for column in self._columns.values()])
+        return row.get_row_as_string(
+            border_character, [column.max_length for column in self._columns.values()]
+        )
 
     def add_row(self, *row: str) -> None:
         """Adds another row to the bottom of the table
-        
+
         Args:
             row (*str): The next row of text to be added to the table
         """
@@ -219,6 +222,18 @@ class PrintTable:
             justification (Justification): The justification for the row
         """
         self._rows[row_i].set_justification_for_cells(justification)
+
+    def set_column_justification(
+        self, col_i: int, justification: Justification
+    ) -> None:
+        """Sets the justificatoin for the column in the table. Overrides any previous justification for that row that was set.
+
+        Args:
+            col_i (int): The index of the column to change
+            justification (Justification): The justification to set for the cells in that column
+        """
+        for row_i in range(0, len(self._rows)):
+            self.set_cell_justification(row_i, col_i, justification)
 
     def set_cell_justification(
         self, row_i: int, column_i: int, justificaiton: Justification
@@ -251,6 +266,9 @@ class PrintTable:
             table += self._get_header(self._rows[0], self._border_character)
 
         for i in range(1 if self.has_header_row else 0, len(self._rows)):
-            table += self._rows[i].get_row_as_string(self._border_character, [column.max_length for column in self._columns.values()])
+            table += self._rows[i].get_row_as_string(
+                self._border_character,
+                [column.max_length for column in self._columns.values()],
+            )
 
         return table + self._get_border_row()
