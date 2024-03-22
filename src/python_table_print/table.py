@@ -190,9 +190,13 @@ class PrintTable:
         Returns:
             str: The row of text sandwiched between two border rows
         """
-        return row.get_row_as_string(
-            border_character, [column.max_length for column in self._columns.values()]
-        ) + self._get_border_row()
+        return (
+            row.get_row_as_string(
+                border_character,
+                [column.max_length for column in self._columns.values()],
+            )
+            + self._get_border_row()
+        )
 
     def add_row(self, *row: str) -> None:
         """Adds another row to the bottom of the table
