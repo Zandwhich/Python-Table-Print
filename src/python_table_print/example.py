@@ -23,7 +23,8 @@ print(table.get_table())
 print("\n\n")
 
 
-# You can set the justification for the whole table, for a row or column, or for an individual cell. Each justification command overrides any previous justification set for those cell(s)
+# You can set the justification for the whole table, for a row or column, or for an individual cell.
+# Each justification command overrides any previous justification set for those cell(s)
 
 table.has_header_row = True
 
