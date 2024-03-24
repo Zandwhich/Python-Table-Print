@@ -7,7 +7,6 @@ BASE_BORDER = "*"
 
 
 # TODO:
-#       * See if you can clean up the code more, specifically breaking it down into smaller functions
 #       * Update the README
 #       * Get rid of the develop branch? (Is it overkill for this project?)
 
