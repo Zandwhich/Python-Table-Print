@@ -8,7 +8,6 @@ BASE_BORDER = "*"
 
 # TODO:
 #       * See if you can clean up the code more, specifically breaking it down into smaller functions
-#       * Do more examples with the new code you just wrote
 #       * Update the README
 #       * Get rid of the develop branch? (Is it overkill for this project?)
 
@@ -16,9 +15,9 @@ BASE_BORDER = "*"
 class Justification(Enum):
     """An enum used for justifying text in the table"""
 
-    RIGHT = 0
+    LEFT = 0
     CENTRE = 1
-    LEFT = 2
+    RIGHT = 2
 
 
 class _Cell:
@@ -27,9 +26,62 @@ class _Cell:
     def __init__(self, text: str, justification: Justification | None = None) -> None:
         self.justification: Justification | None = justification
         self.text = text
+    
+    def _print_as_left_justified(self, max_length: int, border_character: str) -> str:
+        """Prints out the cell left-justified
 
+        Args:
+            max_length (int): The max length of a cell in this column
+            border_character (str): The character to be used on the border at the sides
+
+        Returns:
+            str: The cell as a string with left justification
+        """
+        return (
+                " "
+                + self.text
+                + (" " * (max_length - len(self.text) + 1))
+                + border_character
+            )
+    
+    def _print_as_centre_justified(self, max_length: int, border_character: str) -> str:
+        """Prints out the cell centre-justified
+
+        Args:
+            max_length (int): The max length of a cell in this column
+            border_character (str): The character to be used on the border at the sides
+
+        Returns:
+            str: The cell as a string with centre justification
+        """
+        return (
+                " " * (floor((max_length - len(self.text)) / 2) + 1)
+                + self.text
+                + " " * (ceil((max_length - len(self.text)) / 2) + 1)
+                + border_character
+            )
+    
+    def _print_as_right_justified(self, max_length: int, border_character: str) -> str:
+        """Prints out the cell right-justified
+
+        Args:
+            max_length (int): The max length of a cell in this column
+            border_character (str): The character to be used on the border at the sides
+
+        Returns:
+            str: The cell as a string with right justification
+        """
+        return (
+                " " * (max_length - len(self.text) + 1)
+                + self.text
+                + " "
+                + border_character
+            )
+        
+        
     def get_cell_as_string(self, max_length: int, border_character: str) -> str:
-        """Returns the cell in string format with the correct formatting.
+        """Returns the cell in string format with the correct formatting. 
+        Note that a justification of None will default to a left justification.
 
         Args:
             max_length (int): The max length of a cell in that column.
@@ -39,39 +91,28 @@ class _Cell:
             Exception: If there is an incorrect/unsupported justification
 
         Returns:
-            str: The cell as a string with the correct justicication in place
+            str: The cell as a string with the correct justicication
         """
         # Edge case if there is nothing for this column
         if max_length == 0:
             return " " + border_character
-
-        if self.justification == None or self.justification == Justification.RIGHT:
-            return (
-                " " * (max_length - len(self.text) + 1)
-                + self.text
-                + " "
-                + border_character
-            )
-
-        if self.justification == Justification.LEFT:
-            return (
-                " "
-                + self.text
-                + (" " * (max_length - len(self.text) + 1))
-                + border_character
-            )
-
-        if self.justification == Justification.CENTRE:
-            return (
-                " " * (floor((max_length - len(self.text)) / 2) + 1)
-                + self.text
-                + " " * (ceil((max_length - len(self.text)) / 2) + 1)
-                + border_character
-            )
-
-        # TODO: Raise a "Justification not implemented" exception
-        else:
-            raise Exception
+        
+        match self.justification:
+            case None:  # Default to left-justified
+                return self._print_as_left_justified(max_length, border_character)
+            
+            case Justification.LEFT:
+                return self._print_as_left_justified(max_length, border_character)
+            
+            case Justification.CENTRE:
+                return self._print_as_centre_justified(max_length, border_character)
+            
+            case Justification.RIGHT:
+                return self._print_as_right_justified(max_length, border_character)
+            
+            # TODO: Raise an "Unknown Justification" exception
+            case _:
+                raise Exception
 
 
 class _Column:
