@@ -26,7 +26,7 @@ class _Cell:
     def __init__(self, text: str, justification: Justification | None = None) -> None:
         self.justification: Justification | None = justification
         self.text = text
-    
+
     def _print_as_left_justified(self, max_length: int, border_character: str) -> str:
         """Prints out the cell left-justified
 
@@ -38,12 +38,12 @@ class _Cell:
             str: The cell as a string with left justification
         """
         return (
-                " "
-                + self.text
-                + (" " * (max_length - len(self.text) + 1))
-                + border_character
-            )
-    
+            " "
+            + self.text
+            + (" " * (max_length - len(self.text) + 1))
+            + border_character
+        )
+
     def _print_as_centre_justified(self, max_length: int, border_character: str) -> str:
         """Prints out the cell centre-justified
 
@@ -55,12 +55,12 @@ class _Cell:
             str: The cell as a string with centre justification
         """
         return (
-                " " * (floor((max_length - len(self.text)) / 2) + 1)
-                + self.text
-                + " " * (ceil((max_length - len(self.text)) / 2) + 1)
-                + border_character
-            )
-    
+            " " * (floor((max_length - len(self.text)) / 2) + 1)
+            + self.text
+            + " " * (ceil((max_length - len(self.text)) / 2) + 1)
+            + border_character
+        )
+
     def _print_as_right_justified(self, max_length: int, border_character: str) -> str:
         """Prints out the cell right-justified
 
@@ -72,15 +72,11 @@ class _Cell:
             str: The cell as a string with right justification
         """
         return (
-                " " * (max_length - len(self.text) + 1)
-                + self.text
-                + " "
-                + border_character
-            )
-        
-        
+            " " * (max_length - len(self.text) + 1) + self.text + " " + border_character
+        )
+
     def get_cell_as_string(self, max_length: int, border_character: str) -> str:
-        """Returns the cell in string format with the correct formatting. 
+        """Returns the cell in string format with the correct formatting.
         Note that a justification of None will default to a left justification.
 
         Args:
@@ -96,20 +92,20 @@ class _Cell:
         # Edge case if there is nothing for this column
         if max_length == 0:
             return " " + border_character
-        
+
         match self.justification:
             case None:  # Default to left-justified
                 return self._print_as_left_justified(max_length, border_character)
-            
+
             case Justification.LEFT:
                 return self._print_as_left_justified(max_length, border_character)
-            
+
             case Justification.CENTRE:
                 return self._print_as_centre_justified(max_length, border_character)
-            
+
             case Justification.RIGHT:
                 return self._print_as_right_justified(max_length, border_character)
-            
+
             # TODO: Raise an "Unknown Justification" exception
             case _:
                 raise Exception
