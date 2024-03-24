@@ -21,11 +21,11 @@ def test_basic_table():
     assert (
         table.get_table()
         == """**************************************************************
-*         Col 1 *              Col 2 *                 Col 3 *
+* Col 1         * Col 2              * Col 3                 *
 **************************************************************
-*       Entry 1 *     Entry number 2 *          Entry 3 baby *
-* Another entry *                yay * an entry in the table *
-*     Fun times * This is kinda cool *                 wooow *
+* Entry 1       * Entry number 2     * Entry 3 baby          *
+* Another entry * yay                * an entry in the table *
+* Fun times     * This is kinda cool * wooow                 *
 **************************************************************
 """
     )
@@ -38,16 +38,15 @@ def test_extra_columns():
     table.add_row("Entry 1", "Entry number 2", "Entry 3 baby")
     table.add_row("Another entry", "yay", "an entry in the table")
     table.add_row("Fun times", "This is kinda cool", "wooow")
-    table.has_header_row = True
 
     assert (
         table.get_table()
         == """******************************************************************************
-*         Col 1 *              Col 2 *                 Col 3 * Col 4 * Col 5 *
+* Col 1         * Col 2              * Col 3                 * Col 4 * Col 5 *
 ******************************************************************************
-*       Entry 1 *     Entry number 2 *          Entry 3 baby *       *       *
-* Another entry *                yay * an entry in the table *       *       *
-*     Fun times * This is kinda cool *                 wooow *       *       *
+* Entry 1       * Entry number 2     * Entry 3 baby          *       *       *
+* Another entry * yay                * an entry in the table *       *       *
+* Fun times     * This is kinda cool * wooow                 *       *       *
 ******************************************************************************
 """
     )
@@ -65,10 +64,10 @@ def test_basic_no_header():
     assert (
         table.get_table()
         == """**************************************************************
-*         Col 1 *              Col 2 *                 Col 3 *
-*       Entry 1 *     Entry number 2 *          Entry 3 baby *
-* Another entry *                yay * an entry in the table *
-*     Fun times * This is kinda cool *                 wooow *
+* Col 1         * Col 2              * Col 3                 *
+* Entry 1       * Entry number 2     * Entry 3 baby          *
+* Another entry * yay                * an entry in the table *
+* Fun times     * This is kinda cool * wooow                 *
 **************************************************************
 """
     )
