@@ -6,11 +6,6 @@ from typing import Sequence
 BASE_BORDER = "*"
 
 
-# TODO:
-#       * Update the README
-#       * Get rid of the develop branch? (Is it overkill for this project?)
-
-
 class Justification(Enum):
     """An enum used for justifying text in the table"""
 
