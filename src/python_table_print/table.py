@@ -167,6 +167,7 @@ class PrintTable:
         self._columns: dict[int, _Column] = {}
         self._rows: dict[int, _Row] = {}
         self._border_character = BASE_BORDER
+        self._title: str | None = None
 
     def _check_and_increase_max_column_length(self, column_i: int, length: int) -> None:
         """Takes in the column number and the length of the new string at that column and changes the length to the given length if longer, or if that column doesn't yet exist.
@@ -225,6 +226,8 @@ class PrintTable:
             )
             + self._get_border_row()
         )
+    
+    # TODO: You left off here. Deciding whether or not to create a function called 'get_title' by itself, or to include that logic in the above '_get_header' function
 
     def add_row(self, *row: str) -> None:
         """Adds another row to the bottom of the table
@@ -304,3 +307,16 @@ class PrintTable:
             )
 
         return table + self._get_border_row()
+    
+    def clear_title(self) -> None:
+        """Clears the title, by setting it to None"""
+        self._title = None
+    
+    def set_title(self, title: str) -> None:
+        """Sets the title 
+
+        Args:
+            title (str): The new title of the table
+        """
+        # TODO: Edge case to consider: a really long title (wrap? extend table? limit the length? cut off?)
+        self._title = title
