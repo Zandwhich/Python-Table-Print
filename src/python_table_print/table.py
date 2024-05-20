@@ -226,7 +226,7 @@ class PrintTable:
             )
             + self._get_border_row()
         )
-    
+
     # TODO: You left off here. Deciding whether or not to create a function called 'get_title' by itself, or to include that logic in the above '_get_header' function
 
     def add_row(self, *row: str) -> None:
@@ -307,13 +307,13 @@ class PrintTable:
             )
 
         return table + self._get_border_row()
-    
+
     def clear_title(self) -> None:
         """Clears the title, by setting it to None"""
         self._title = None
-    
+
     def set_title(self, title: str) -> None:
-        """Sets the title 
+        """Sets the title
 
         Args:
             title (str): The new title of the table
