@@ -225,4 +225,5 @@ def test_table_different_cell_justification():
 """
     )
 
+
 # TODO: Tests for a centred title, a left-justified title, a right-justified title, a too-long title, and a cleared title
