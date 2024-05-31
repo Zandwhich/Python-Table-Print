@@ -70,6 +70,12 @@ print("Table With Title With Right Justification\n")
 print(my_table.get_table())
 print("\n\n")
 
+my_table.set_title("This title is just way way too long and it wil be truncated")
+
+print("Table With A Truncated Title")
+print(my_table.get_table())
+print("\n\n")
+
 my_table.clear_title()
 
 print("Table With Cleared Title\n")
