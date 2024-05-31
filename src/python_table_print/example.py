@@ -51,3 +51,15 @@ my_table.set_cell_justification(1, 1, Justification.LEFT)
 print("Table With One Cell Left-Justified\n")
 print(my_table.get_table())
 print("\n\n")
+
+my_table.set_title("Title")
+
+print("Table With Title\n")
+print(my_table.get_table())
+print("\n\n")
+
+my_table.clear_title()
+
+print("Table With Cleared Title\n")
+print(my_table.get_table())
+print("\n\n")

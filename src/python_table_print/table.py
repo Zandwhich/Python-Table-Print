@@ -187,7 +187,7 @@ class PrintTable:
             self._columns[column_i].max_length = length
 
     def _total_border_length(self) -> int:
-        """Figures out the length of the table
+        """Figures out the length of the table, including the two border characters themselves
 
         Returns:
             int: The length of the table
@@ -227,7 +227,38 @@ class PrintTable:
             + self._get_border_row()
         )
 
-    # TODO: You left off here. Deciding whether or not to create a function called 'get_title' by itself, or to include that logic in the above '_get_header' function
+    def _get_title_row(self, border_character: str) -> str:
+        """Creates the title row for the table if the title is set. Otherwise returns just the top border row
+
+        NOTE: For now, we will cut off the title if it's too long. This will be fixed in GitHub Issue #61
+        NOTE: For now, we only support centre-justifying the title. This will be addressed in GitHub Issue #62
+
+        Args:
+            border_character (str): The border character
+
+        Returns:
+            str: The title of the table, or an empty string if the title is not set
+        """
+
+        if not self._title:
+            return self._get_border_row()
+
+        # We want to cut off the title (for now) to not go passed the length of the table
+        title = self._title[: self._total_border_length() - 4]
+
+        length_without_borders = self._total_border_length() - 4
+
+        # Currently, we're only supportng centring the title. This will be updated in GitHub Issue #62
+        title = (
+            self._border_character +
+            " " * (floor((length_without_borders - len(title)) / 2) + 1)
+            + title
+            + " " * (ceil((length_without_borders - len(title)) / 2) + 1)
+            + self._border_character
+            + "\n"
+        )
+
+        return self._get_border_row() + title + self._get_border_row()
 
     def add_row(self, *row: str) -> None:
         """Adds another row to the bottom of the table
@@ -295,7 +326,7 @@ class PrintTable:
             # TODO: Throw a "table has no length" exception
             raise Exception
 
-        table = self._get_border_row()
+        table = self._get_title_row(self._border_character)
 
         if self.has_header_row:
             table += self._get_header(self._rows[0], self._border_character)
@@ -318,5 +349,4 @@ class PrintTable:
         Args:
             title (str): The new title of the table
         """
-        # TODO: Edge case to consider: a really long title (wrap? extend table? limit the length? cut off?)
         self._title = title
