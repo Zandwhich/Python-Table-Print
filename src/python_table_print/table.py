@@ -259,17 +259,17 @@ class PrintTable:
                     + border_character
                     + "\n"
                 )
-            
+
             case Justification.CENTRE:
                 title = (
-                    self._border_character +
-                    " " * (floor((length_without_borders - len(title)) / 2) + 1)
+                    self._border_character
+                    + " " * (floor((length_without_borders - len(title)) / 2) + 1)
                     + title
                     + " " * (ceil((length_without_borders - len(title)) / 2) + 1)
                     + self._border_character
                     + "\n"
                 )
-            
+
             case Justification.RIGHT:
                 title = (
                     self._border_character
@@ -279,12 +279,10 @@ class PrintTable:
                     + self._border_character
                     + "\n"
                 )
-                
+
             case _:
                 # TODO: Raise "Unsupported Justification" Exception
                 raise Exception()
-
-        
 
         return self._get_border_row() + title + self._get_border_row()
 
@@ -372,7 +370,9 @@ class PrintTable:
         self._title = None
         self._title_justification = Justification.CENTRE
 
-    def set_title(self, title: str, title_justification: Justification = Justification.CENTRE) -> None:
+    def set_title(
+        self, title: str, title_justification: Justification = Justification.CENTRE
+    ) -> None:
         """Sets the title and the title's justification.
 
         Args:
@@ -381,7 +381,7 @@ class PrintTable:
         """
         self._title = title
         self._title_justification = title_justification
-    
+
     def set_title_justification(self, title_justification: Justification) -> None:
         """Sets the title's justification
 
@@ -389,5 +389,3 @@ class PrintTable:
             title_justification (Justification): The justification for the title
         """
         self._title_justification = title_justification
-    
-    
