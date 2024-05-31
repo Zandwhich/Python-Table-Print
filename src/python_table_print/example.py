@@ -54,7 +54,19 @@ print("\n\n")
 
 my_table.set_title("Title")
 
-print("Table With Title\n")
+print("Table With Title With Centre Justification\n")
+print(my_table.get_table())
+print("\n\n")
+
+my_table.set_title_justification(Justification.LEFT)
+
+print("Table With Title With Left Justification\n")
+print(my_table.get_table())
+print("\n\n")
+
+my_table.set_title_justification(Justification.RIGHT)
+
+print("Table With Title With Right Justification\n")
 print(my_table.get_table())
 print("\n\n")
 
