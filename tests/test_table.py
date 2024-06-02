@@ -224,3 +224,130 @@ def test_table_different_cell_justification():
 **************************************************************
 """
     )
+
+
+def test_table_with_title_centred():
+    table = PrintTable()
+
+    table.add_row("Col 1", "Col 2", "Col 3")
+    table.add_row("Entry 1", "Entry number 2", "Entry 3 baby")
+    table.add_row("Another entry", "yay", "an entry in the table")
+    table.add_row("Fun times", "This is kinda cool", "wooow")
+
+    table.set_title("Title")
+
+    assert (
+        table.get_table()
+        == """**************************************************************
+*                           Title                            *
+**************************************************************
+* Col 1         * Col 2              * Col 3                 *
+**************************************************************
+* Entry 1       * Entry number 2     * Entry 3 baby          *
+* Another entry * yay                * an entry in the table *
+* Fun times     * This is kinda cool * wooow                 *
+**************************************************************
+"""
+    )
+
+
+def test_table_with_title_left_justified():
+    table = PrintTable()
+
+    table.add_row("Col 1", "Col 2", "Col 3")
+    table.add_row("Entry 1", "Entry number 2", "Entry 3 baby")
+    table.add_row("Another entry", "yay", "an entry in the table")
+    table.add_row("Fun times", "This is kinda cool", "wooow")
+
+    table.set_title("Title", Justification.LEFT)
+
+    assert (
+        table.get_table()
+        == """**************************************************************
+* Title                                                      *
+**************************************************************
+* Col 1         * Col 2              * Col 3                 *
+**************************************************************
+* Entry 1       * Entry number 2     * Entry 3 baby          *
+* Another entry * yay                * an entry in the table *
+* Fun times     * This is kinda cool * wooow                 *
+**************************************************************
+"""
+    )
+
+
+def test_table_with_title_right_justified():
+    table = PrintTable()
+
+    table.add_row("Col 1", "Col 2", "Col 3")
+    table.add_row("Entry 1", "Entry number 2", "Entry 3 baby")
+    table.add_row("Another entry", "yay", "an entry in the table")
+    table.add_row("Fun times", "This is kinda cool", "wooow")
+
+    table.set_title("Title")
+    table.set_title_justification(Justification.RIGHT)
+
+    assert (
+        table.get_table()
+        == """**************************************************************
+*                                                      Title *
+**************************************************************
+* Col 1         * Col 2              * Col 3                 *
+**************************************************************
+* Entry 1       * Entry number 2     * Entry 3 baby          *
+* Another entry * yay                * an entry in the table *
+* Fun times     * This is kinda cool * wooow                 *
+**************************************************************
+"""
+    )
+
+
+def test_table_with_a_very_long_title():
+    table = PrintTable()
+
+    table.add_row("Col 1", "Col 2", "Col 3")
+    table.add_row("Entry 1", "Entry number 2", "Entry 3 baby")
+    table.add_row("Another entry", "yay", "an entry in the table")
+    table.add_row("Fun times", "This is kinda cool", "wooow")
+
+    table.set_title(
+        "This is a title that is way, way, way, way, way, way too long and will certainly be truncated"
+    )
+
+    assert (
+        table.get_table()
+        == """**************************************************************
+* This is a title that is way, way, way, way, way, way too l *
+**************************************************************
+* Col 1         * Col 2              * Col 3                 *
+**************************************************************
+* Entry 1       * Entry number 2     * Entry 3 baby          *
+* Another entry * yay                * an entry in the table *
+* Fun times     * This is kinda cool * wooow                 *
+**************************************************************
+"""
+    )
+
+
+def test_table_with_a_cleared_title():
+    table = PrintTable()
+
+    table.add_row("Col 1", "Col 2", "Col 3")
+    table.add_row("Entry 1", "Entry number 2", "Entry 3 baby")
+    table.add_row("Another entry", "yay", "an entry in the table")
+    table.add_row("Fun times", "This is kinda cool", "wooow")
+
+    table.set_title("Title")
+    table.clear_title()
+
+    assert (
+        table.get_table()
+        == """**************************************************************
+* Col 1         * Col 2              * Col 3                 *
+**************************************************************
+* Entry 1       * Entry number 2     * Entry 3 baby          *
+* Another entry * yay                * an entry in the table *
+* Fun times     * This is kinda cool * wooow                 *
+**************************************************************
+"""
+    )
