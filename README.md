@@ -160,3 +160,67 @@ Output:
 ```
 
 Notice how in the above examples the justifications of the edited cells were overwritten with the latest justification.
+
+## Title
+
+You can add a title to your table. Defaults to centre justification
+
+```python
+...
+
+my_table.set_title("Title")
+```
+
+Output:
+```
+**************************************************************
+*                           Title                            *
+**************************************************************
+*         Col 1 * Col 2              * Col 3                 *
+**************************************************************
+*       Entry 1 * Entry number 2     *     Entry 3 baby      *
+* Another entry *        yay         * an entry in the table *
+*     Fun times * This is kinda cool *         wooow         *
+**************************************************************
+```
+
+Clearing a title:
+
+```python
+...
+
+my_table.clear_title()
+```
+
+Output:
+```
+**************************************************************
+*       Entry 1 * Entry number 2     *     Entry 3 baby      *
+* Another entry *        yay         * an entry in the table *
+*     Fun times * This is kinda cool *         wooow         *
+**************************************************************\
+```
+
+### Justification for Title
+
+You can change the justification of your title:
+
+```python
+...
+
+my_table.set_title("Title")
+my_table.set_title_justification(Justification.LEFT)
+```
+
+Output:
+```
+**************************************************************
+* Title                                                      *
+**************************************************************
+*         Col 1 * Col 2              * Col 3                 *
+**************************************************************
+*       Entry 1 * Entry number 2     *     Entry 3 baby      *
+* Another entry *        yay         * an entry in the table *
+*     Fun times * This is kinda cool *         wooow         *
+**************************************************************
+```
