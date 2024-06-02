@@ -102,7 +102,7 @@ class _Cell:
 
             # TODO: Raise an "Unknown Justification" exception
             case _:
-                raise Exception
+                raise Exception()
 
 
 class _Column:
@@ -167,6 +167,8 @@ class PrintTable:
         self._columns: dict[int, _Column] = {}
         self._rows: dict[int, _Row] = {}
         self._border_character = BASE_BORDER
+        self._title: str | None = None
+        self._title_justification: Justification = Justification.CENTRE
 
     def _check_and_increase_max_column_length(self, column_i: int, length: int) -> None:
         """Takes in the column number and the length of the new string at that column and changes the length to the given length if longer, or if that column doesn't yet exist.
@@ -186,7 +188,7 @@ class PrintTable:
             self._columns[column_i].max_length = length
 
     def _total_border_length(self) -> int:
-        """Figures out the length of the table
+        """Figures out the length of the table, including the two border characters themselves
 
         Returns:
             int: The length of the table
@@ -225,6 +227,64 @@ class PrintTable:
             )
             + self._get_border_row()
         )
+
+    def _get_title_row(self, border_character: str) -> str:
+        """Creates the title row for the table if the title is set. Otherwise returns just the top border row
+
+        NOTE: For now, we will cut off the title if it's too long. This will be fixed in GitHub Issue #61
+        NOTE: For now, we only support centre-justifying the title. This will be addressed in GitHub Issue #62
+
+        Args:
+            border_character (str): The border character
+
+        Returns:
+            str: The title of the table, or an empty string if the title is not set
+        """
+
+        if not self._title:
+            return self._get_border_row()
+
+        # We want to cut off the title (for now) to not go passed the length of the table
+        title = self._title[: self._total_border_length() - 4]
+
+        length_without_borders = self._total_border_length() - 4
+
+        match self._title_justification:
+            case Justification.LEFT:
+                title = (
+                    self._border_character
+                    + " "
+                    + title
+                    + (" " * (length_without_borders - len(title) + 1))
+                    + border_character
+                    + "\n"
+                )
+
+            case Justification.CENTRE:
+                title = (
+                    self._border_character
+                    + " " * (floor((length_without_borders - len(title)) / 2) + 1)
+                    + title
+                    + " " * (ceil((length_without_borders - len(title)) / 2) + 1)
+                    + self._border_character
+                    + "\n"
+                )
+
+            case Justification.RIGHT:
+                title = (
+                    self._border_character
+                    + " " * (length_without_borders - len(title) + 1)
+                    + title
+                    + " "
+                    + self._border_character
+                    + "\n"
+                )
+
+            case _:
+                # TODO: Raise "Unsupported Justification" Exception
+                raise Exception()
+
+        return self._get_border_row() + title + self._get_border_row()
 
     def add_row(self, *row: str) -> None:
         """Adds another row to the bottom of the table
@@ -292,7 +352,7 @@ class PrintTable:
             # TODO: Throw a "table has no length" exception
             raise Exception
 
-        table = self._get_border_row()
+        table = self._get_title_row(self._border_character)
 
         if self.has_header_row:
             table += self._get_header(self._rows[0], self._border_character)
@@ -304,3 +364,28 @@ class PrintTable:
             )
 
         return table + self._get_border_row()
+
+    def clear_title(self) -> None:
+        """Clears the title, by setting it to None"""
+        self._title = None
+        self._title_justification = Justification.CENTRE
+
+    def set_title(
+        self, title: str, title_justification: Justification = Justification.CENTRE
+    ) -> None:
+        """Sets the title and the title's justification.
+
+        Args:
+            title (str): The new title of the table
+            justification (Justification): The justification for the title of the table. If no justification is passed in, defaults to Justification.CENTRE
+        """
+        self._title = title
+        self._title_justification = title_justification
+
+    def set_title_justification(self, title_justification: Justification) -> None:
+        """Sets the title's justification
+
+        Args:
+            title_justification (Justification): The justification for the title
+        """
+        self._title_justification = title_justification
