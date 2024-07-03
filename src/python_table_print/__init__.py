@@ -1,1 +1,2 @@
-from .table import PrintTable, Justification
+from .table import PrintTable
+from .justification import Justification

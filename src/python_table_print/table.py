@@ -1,160 +1,11 @@
-from enum import Enum
 from math import ceil, floor
 from typing import Sequence
+from justification import Justification
+from column import Column
+from row import Row
 
 
 BASE_BORDER = "*"
-
-
-class Justification(Enum):
-    """An enum used for justifying text in the table"""
-
-    LEFT = 0
-    CENTRE = 1
-    RIGHT = 2
-
-
-class _Cell:
-    """The basic building block of the table that stores the text and the justification of itself"""
-
-    def __init__(self, text: str, justification: Justification | None = None) -> None:
-        self.justification: Justification | None = justification
-        self.text = text
-
-    def _print_as_left_justified(self, max_length: int, border_character: str) -> str:
-        """Prints out the cell left-justified
-
-        Args:
-            max_length (int): The max length of a cell in this column
-            border_character (str): The character to be used on the border at the sides
-
-        Returns:
-            str: The cell as a string with left justification
-        """
-        return (
-            " "
-            + self.text
-            + (" " * (max_length - len(self.text) + 1))
-            + border_character
-        )
-
-    def _print_as_centre_justified(self, max_length: int, border_character: str) -> str:
-        """Prints out the cell centre-justified
-
-        Args:
-            max_length (int): The max length of a cell in this column
-            border_character (str): The character to be used on the border at the sides
-
-        Returns:
-            str: The cell as a string with centre justification
-        """
-        return (
-            " " * (floor((max_length - len(self.text)) / 2) + 1)
-            + self.text
-            + " " * (ceil((max_length - len(self.text)) / 2) + 1)
-            + border_character
-        )
-
-    def _print_as_right_justified(self, max_length: int, border_character: str) -> str:
-        """Prints out the cell right-justified
-
-        Args:
-            max_length (int): The max length of a cell in this column
-            border_character (str): The character to be used on the border at the sides
-
-        Returns:
-            str: The cell as a string with right justification
-        """
-        return (
-            " " * (max_length - len(self.text) + 1) + self.text + " " + border_character
-        )
-
-    def get_cell_as_string(self, max_length: int, border_character: str) -> str:
-        """Returns the cell in string format with the correct formatting.
-        Note that a justification of None will default to a left justification.
-
-        Args:
-            max_length (int): The max length of a cell in that column.
-            border_character (str): The character to be used on the border at the sides
-
-        Raises:
-            Exception: If there is an incorrect/unsupported justification
-
-        Returns:
-            str: The cell as a string with the correct justicication
-        """
-        # Edge case if there is nothing for this column
-        if max_length == 0:
-            return " " + border_character
-
-        match self.justification:
-            case None:  # Default to left-justified
-                return self._print_as_left_justified(max_length, border_character)
-
-            case Justification.LEFT:
-                return self._print_as_left_justified(max_length, border_character)
-
-            case Justification.CENTRE:
-                return self._print_as_centre_justified(max_length, border_character)
-
-            case Justification.RIGHT:
-                return self._print_as_right_justified(max_length, border_character)
-
-            # TODO: Raise an "Unknown Justification" exception
-            case _:
-                raise Exception()
-
-
-class _Column:
-    """An abstraction of the column of the table, which holds information about the column"""
-
-    def __init__(self) -> None:
-        self.max_length = 0
-
-
-class _Row:
-    """An abstraction of the row of the table, which holds each of the cells in that row of the table"""
-
-    def __init__(self, *row: str, justification: Justification | None = None) -> None:
-        self.cells: dict[int, _Cell] = {}
-
-        for i in range(0, len(row)):
-            self.cells[i] = _Cell(row[i], justification)
-
-    def set_justification_for_cells(self, justification: Justification | None) -> None:
-        """Sets the justification for all of the cells in the row
-
-        Args:
-            justification (Justification | None): The justification to set the cells to. If `None` is passed in, it sets the justificaiton to the default,
-            which currently is the right justification.
-        """
-        for cell in self.cells.values():
-            cell.justification = justification
-
-    def get_row_as_string(
-        self, border_character: str, max_lengths: Sequence[int]
-    ) -> str:
-        """Returns the row as a string
-
-        Args:
-            border_character (str): The border character that is being used for the table
-            max_lengths (Sequence[int]): The max lengths for all of the columns
-
-        Returns:
-            str: _description_
-        """
-        final_row = border_character
-
-        for i in range(0, len(max_lengths)):
-            if i < len(self.cells):
-                final_row += self.cells[i].get_cell_as_string(
-                    max_lengths[i], border_character
-                )
-
-            else:
-                final_row += " " * (max_lengths[i] + 2) + border_character
-
-        return final_row + "\n"
 
 
 class PrintTable:
@@ -164,8 +15,8 @@ class PrintTable:
         self.has_header_row: bool = True
 
         # TODO: Is a dictionary whose keys are ints essentially a list in Python?
-        self._columns: dict[int, _Column] = {}
-        self._rows: dict[int, _Row] = {}
+        self._columns: dict[int, Column] = {}
+        self._rows: dict[int, Row] = {}
         self._border_character = BASE_BORDER
         self._title: str | None = None
         self._title_justification: Justification = Justification.CENTRE
@@ -179,7 +30,7 @@ class PrintTable:
         """
         # If there is no column for this yet, add one
         if column_i >= len(self._columns):
-            self._columns[column_i] = _Column()
+            self._columns[column_i] = Column()
             self._columns[column_i].max_length = length
             return
 
@@ -210,7 +61,7 @@ class PrintTable:
         """
         return BASE_BORDER * self._total_border_length() + "\n"
 
-    def _get_header(self, row: _Row, border_character: str) -> str:
+    def _get_header(self, row: Row, border_character: str) -> str:
         """Creates the 'header rows', which is the row of text sandwiched between two border rows
 
         Args:
@@ -295,7 +146,7 @@ class PrintTable:
         for col_i in range(0, len(row)):
             self._check_and_increase_max_column_length(col_i, len(row[col_i]))
 
-        self._rows[len(self._rows)] = _Row(*row)
+        self._rows[len(self._rows)] = Row(*row)
 
     def set_table_justification(self, justification: Justification) -> None:
         """Sets the justification for the whole table. Overrides any previous justification that was set
