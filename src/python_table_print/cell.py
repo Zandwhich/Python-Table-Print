@@ -1,5 +1,5 @@
 from math import ceil, floor
-from justification import Justification
+from .justification import Justification
 
 
 class Cell:

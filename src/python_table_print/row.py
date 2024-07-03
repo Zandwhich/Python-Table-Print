@@ -1,6 +1,6 @@
 from typing import Sequence
-from justification import Justification
-from cell import Cell
+from .justification import Justification
+from .cell import Cell
 
 
 class Row:

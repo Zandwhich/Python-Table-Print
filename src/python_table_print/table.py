@@ -1,8 +1,8 @@
 from math import ceil, floor
 from typing import Sequence
-from justification import Justification
-from column import Column
-from row import Row
+from .justification import Justification
+from .column import Column
+from .row import Row
 
 
 BASE_BORDER = "*"
