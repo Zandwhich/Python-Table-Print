@@ -1,6 +1,7 @@
 from math import ceil, floor
 from justification import Justification
 
+
 class Cell:
     """The basic building block of the table that stores the text and the justification of itself"""
 
