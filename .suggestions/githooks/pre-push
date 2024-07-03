@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Check if the VIRTUAL_ENV environment variable is set
+if [ -n "$VIRTUAL_ENV" ]; then
+    echo "Python virtual environment is active"
+else
+    echo "Not in a Python virtual environment."
+    echo "Start your Python virtual environment by running: 'source venv/bin/activate'. This is needed to run black and pytest."
+    exit 1
+fi
+
+# Define the command to run black and PyTest
+BLACK_COMMAND="black --check ."
+PYTEST_COMMAND="pytest"
+
+# Run black to check for errors and warnings
+$BLACK_COMMAND
+
+# Check the exit code of black
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    echo "~   The black check failed. Please fix the formatting issues before pushing.  ~"
+    echo "~                                                                             ~"
+    echo "~                         Fix this by running:                                ~"
+    echo "~                              '$ black .'                                    ~"
+    echo "~                                                                             ~"
+    echo "~                  Optionally, ignore this by running:                        ~"
+    echo "~                        '$ git push --no-verify'                             ~"
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    echo ""
+    exit 2
+fi
+
+# Run PyTest to check for errors and warning
+$PYTEST_COMMAND
+
+# Check the exit code of PyTest
+if [ $? -ne 0 ]; then
+    echo "PyTest found errors or warnings. Aborting push."
+    exit 3
+fi
+
+# If PyTest passes without errors, proceed with the push
+exit 0
