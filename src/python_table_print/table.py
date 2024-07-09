@@ -22,6 +22,7 @@ TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR = "├"
 TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR = "┤"
 TABLE_CHARACTER_MIDDLE_SEPARATOR = "┼"
 
+
 class PrintTable:
     """The table itself. More documentation to come!"""
 
@@ -33,23 +34,38 @@ class PrintTable:
         self._rows: dict[int, Row] = {}
         self._title: str | None = None
         self._title_justification: Justification = Justification.CENTRE
-    
+
     def _border(self, left_char: str, right_char: str, separator_char: str) -> str:
         border = left_char
-        
+
         for column in self._columns.values():
-            border += TABLE_CHARACTER_HORIZONTAL_BAR * (column.max_length + 2) + separator_char
-        
+            border += (
+                TABLE_CHARACTER_HORIZONTAL_BAR * (column.max_length + 2)
+                + separator_char
+            )
+
         return border[:-1] + right_char + "\n"
-        
+
     def _top_border(self) -> str:
-        return self._border(TABLE_CHARACTER_TOP_LEFT, TABLE_CHARACTER_TOP_RIGHT, TABLE_CHARACTER_TOP_SEPARATOR)
-    
+        return self._border(
+            TABLE_CHARACTER_TOP_LEFT,
+            TABLE_CHARACTER_TOP_RIGHT,
+            TABLE_CHARACTER_TOP_SEPARATOR,
+        )
+
     def _bottom_border(self) -> str:
-        return self._border(TABLE_CHARACTER_BOTTOM_LEFT, TABLE_CHARACTER_BOTTOM_RIGHT, TABLE_CHARACTER_BOTTOM_SEPARATOR)
-    
+        return self._border(
+            TABLE_CHARACTER_BOTTOM_LEFT,
+            TABLE_CHARACTER_BOTTOM_RIGHT,
+            TABLE_CHARACTER_BOTTOM_SEPARATOR,
+        )
+
     def _middle_border(self) -> str:
-        return self._border(TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR, TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR, TABLE_CHARACTER_MIDDLE_SEPARATOR)
+        return self._border(
+            TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR,
+            TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR,
+            TABLE_CHARACTER_MIDDLE_SEPARATOR,
+        )
 
     def _check_and_increase_max_column_length(self, column_i: int, length: int) -> None:
         """Takes in the column number and the length of the new string at that column and changes the length to the given length if longer, or if that column doesn't yet exist.
@@ -157,7 +173,19 @@ class PrintTable:
                 # TODO: Raise "Unsupported Justification" Exception
                 raise Exception()
 
-        return self._border(TABLE_CHARACTER_TOP_LEFT, TABLE_CHARACTER_TOP_RIGHT, TABLE_CHARACTER_HORIZONTAL_BAR) + title + self._border(TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR, TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR, TABLE_CHARACTER_TOP_SEPARATOR)
+        return (
+            self._border(
+                TABLE_CHARACTER_TOP_LEFT,
+                TABLE_CHARACTER_TOP_RIGHT,
+                TABLE_CHARACTER_HORIZONTAL_BAR,
+            )
+            + title
+            + self._border(
+                TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR,
+                TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR,
+                TABLE_CHARACTER_TOP_SEPARATOR,
+            )
+        )
 
     def add_row(self, *row: str) -> None:
         """Adds another row to the bottom of the table
