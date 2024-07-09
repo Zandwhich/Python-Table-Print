@@ -22,13 +22,13 @@ print(my_table.get_table())
 
 Output:
 ```
-**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
 
 As shown in the above example, getting the current table is as simple as calling the `get_table()` method. This returns the table as a simple string. This can then be passed to whatever function you like, in this case the `print` function.
@@ -53,12 +53,12 @@ print(my_table.get_table())
 
 Output:
 ```
-**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
 
 ## Justification
@@ -84,13 +84,13 @@ print(my_table.get_table())
 
 Output:
 ```
-**************************************************************
-*     Col 1     *       Col 2        *         Col 3         *
-**************************************************************
-*    Entry 1    *   Entry number 2   *     Entry 3 baby      *
-* Another entry *        yay         * an entry in the table *
-*   Fun times   * This is kinda cool *         wooow         *
-**************************************************************
+┌───────────────┬────────────────────┬───────────────────────┐
+│     Col 1     │       Col 2        │         Col 3         │
+├───────────────┼────────────────────┼───────────────────────┤
+│    Entry 1    │   Entry number 2   │     Entry 3 baby      │
+│ Another entry │        yay         │ an entry in the table │
+│   Fun times   │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
 
 ### Justification for a Row:
@@ -106,13 +106,13 @@ print(my_table.get_table())
 
 Output:
 ```
-**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-*    Entry 1    *   Entry number 2   *     Entry 3 baby      *
-* Another entry *        yay         * an entry in the table *
-*   Fun times   * This is kinda cool *         wooow         *
-**************************************************************
+┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│    Entry 1    │   Entry number 2   │     Entry 3 baby      │
+│ Another entry │        yay         │ an entry in the table │
+│   Fun times   │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
 
 ### Justification for a Column:
@@ -128,13 +128,13 @@ print(my_table.get_table())
 
 Output:
 ```
-**************************************************************
-*         Col 1 * Col 2              * Col 3                 *
-**************************************************************
-*       Entry 1 *   Entry number 2   *     Entry 3 baby      *
-* Another entry *        yay         * an entry in the table *
-*     Fun times * This is kinda cool *         wooow         *
-**************************************************************
+┌───────────────┬────────────────────┬───────────────────────┐
+│         Col 1 │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│       Entry 1 │   Entry number 2   │     Entry 3 baby      │
+│ Another entry │        yay         │ an entry in the table │
+│     Fun times │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
 
 ### Justification for a Cell:
@@ -150,13 +150,13 @@ print(my_table.get_table())
 
 Output:
 ```
-**************************************************************
-*         Col 1 * Col 2              * Col 3                 *
-**************************************************************
-*       Entry 1 * Entry number 2     *     Entry 3 baby      *
-* Another entry *        yay         * an entry in the table *
-*     Fun times * This is kinda cool *         wooow         *
-**************************************************************
+┌───────────────┬────────────────────┬───────────────────────┐
+│         Col 1 │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│       Entry 1 │ Entry number 2     │     Entry 3 baby      │
+│ Another entry │        yay         │ an entry in the table │
+│     Fun times │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
 
 Notice how in the above examples the justifications of the edited cells were overwritten with the latest justification.
@@ -173,15 +173,15 @@ my_table.set_title("Title")
 
 Output:
 ```
-**************************************************************
-*                           Title                            *
-**************************************************************
-*         Col 1 * Col 2              * Col 3                 *
-**************************************************************
-*       Entry 1 * Entry number 2     *     Entry 3 baby      *
-* Another entry *        yay         * an entry in the table *
-*     Fun times * This is kinda cool *         wooow         *
-**************************************************************
+┌────────────────────────────────────────────────────────────┐
+│                           Title                            │
+├───────────────┬────────────────────┬───────────────────────┤
+│         Col 1 │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│       Entry 1 │ Entry number 2     │     Entry 3 baby      │
+│ Another entry │        yay         │ an entry in the table │
+│     Fun times │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
 
 Clearing a title:
@@ -194,11 +194,13 @@ my_table.clear_title()
 
 Output:
 ```
-**************************************************************
-*       Entry 1 * Entry number 2     *     Entry 3 baby      *
-* Another entry *        yay         * an entry in the table *
-*     Fun times * This is kinda cool *         wooow         *
-**************************************************************\
+┌───────────────┬────────────────────┬───────────────────────┐
+│         Col 1 │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│       Entry 1 │ Entry number 2     │     Entry 3 baby      │
+│ Another entry │        yay         │ an entry in the table │
+│     Fun times │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
 
 ### Justification for Title
@@ -214,13 +216,13 @@ my_table.set_title_justification(Justification.LEFT)
 
 Output:
 ```
-**************************************************************
-* Title                                                      *
-**************************************************************
-*         Col 1 * Col 2              * Col 3                 *
-**************************************************************
-*       Entry 1 * Entry number 2     *     Entry 3 baby      *
-* Another entry *        yay         * an entry in the table *
-*     Fun times * This is kinda cool *         wooow         *
-**************************************************************
+┌────────────────────────────────────────────────────────────┐
+│ Title                                                      │
+├───────────────┬────────────────────┬───────────────────────┤
+│         Col 1 │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│       Entry 1 │ Entry number 2     │     Entry 3 baby      │
+│ Another entry │        yay         │ an entry in the table │
+│     Fun times │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 ```
