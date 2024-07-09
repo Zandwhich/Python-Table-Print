@@ -6,6 +6,21 @@ from .row import Row
 
 BASE_BORDER = "*"
 
+# Table Characters
+TABLE_CHARACTER_HORIZONTAL_BAR = "─"
+TABLE_CHARACTER_VERTICAL_BAR = "│"
+
+TABLE_CHARACTER_TOP_LEFT = "┌"
+TABLE_CHARACTER_TOP_RIGHT = "┐"
+TABLE_CHARACTER_TOP_SEPARATOR = "┬"
+
+TABLE_CHARACTER_BOTTOM_LEFT = "└"
+TABLE_CHARACTER_BOTTOM_RIGHT = "┘"
+TABLE_CHARACTER_BOTTOM_SEPARATOR = "┴"
+
+TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR = "├"
+TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR = "┤"
+TABLE_CHARACTER_MIDDLE_SEPARATOR = "┼"
 
 class PrintTable:
     """The table itself. More documentation to come!"""
@@ -16,9 +31,25 @@ class PrintTable:
         # TODO: Is a dictionary whose keys are ints essentially a list in Python?
         self._columns: dict[int, Column] = {}
         self._rows: dict[int, Row] = {}
-        self._border_character = BASE_BORDER
         self._title: str | None = None
         self._title_justification: Justification = Justification.CENTRE
+    
+    def _border(self, left_char: str, right_char: str, separator_char: str) -> str:
+        border = left_char
+        
+        for column in self._columns.values():
+            border += TABLE_CHARACTER_HORIZONTAL_BAR * (column.max_length + 2) + separator_char
+        
+        return border[:-1] + right_char + "\n"
+        
+    def _top_border(self) -> str:
+        return self._border(TABLE_CHARACTER_TOP_LEFT, TABLE_CHARACTER_TOP_RIGHT, TABLE_CHARACTER_TOP_SEPARATOR)
+    
+    def _bottom_border(self) -> str:
+        return self._border(TABLE_CHARACTER_BOTTOM_LEFT, TABLE_CHARACTER_BOTTOM_RIGHT, TABLE_CHARACTER_BOTTOM_SEPARATOR)
+    
+    def _middle_border(self) -> str:
+        return self._border(TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR, TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR, TABLE_CHARACTER_MIDDLE_SEPARATOR)
 
     def _check_and_increase_max_column_length(self, column_i: int, length: int) -> None:
         """Takes in the column number and the length of the new string at that column and changes the length to the given length if longer, or if that column doesn't yet exist.
@@ -52,15 +83,7 @@ class PrintTable:
 
         return total_border_length + 1
 
-    def _get_border_row(self) -> str:
-        """Creates the 'border row', or the top and botom row of the table made up of only border characters
-
-        Returns:
-            str: The border row made up of only border characters
-        """
-        return BASE_BORDER * self._total_border_length() + "\n"
-
-    def _get_header(self, row: Row, border_character: str) -> str:
+    def _get_header(self, row: Row) -> str:
         """Creates the 'header rows', which is the row of text sandwiched between two border rows
 
         Args:
@@ -72,17 +95,17 @@ class PrintTable:
         """
         return (
             row.get_row_as_string(
-                border_character,
+                TABLE_CHARACTER_VERTICAL_BAR,
                 [column.max_length for column in self._columns.values()],
             )
-            + self._get_border_row()
+            + self._middle_border()
         )
 
-    def _get_title_row(self, border_character: str) -> str:
+    def _get_title_row(self) -> str:
         """Creates the title row for the table if the title is set. Otherwise returns just the top border row
 
         NOTE: For now, we will cut off the title if it's too long. This will be fixed in GitHub Issue #61
-        NOTE: For now, we only support centre-justifying the title. This will be addressed in GitHub Issue #62
+        TODO: Address the above
 
         Args:
             border_character (str): The border character
@@ -92,7 +115,7 @@ class PrintTable:
         """
 
         if not self._title:
-            return self._get_border_row()
+            return self._top_border()
 
         # We want to cut off the title (for now) to not go passed the length of the table
         title = self._title[: self._total_border_length() - 4]
@@ -102,31 +125,31 @@ class PrintTable:
         match self._title_justification:
             case Justification.LEFT:
                 title = (
-                    self._border_character
+                    TABLE_CHARACTER_VERTICAL_BAR
                     + " "
                     + title
                     + (" " * (length_without_borders - len(title) + 1))
-                    + border_character
+                    + TABLE_CHARACTER_VERTICAL_BAR
                     + "\n"
                 )
 
             case Justification.CENTRE:
                 title = (
-                    self._border_character
+                    TABLE_CHARACTER_VERTICAL_BAR
                     + " " * (floor((length_without_borders - len(title)) / 2) + 1)
                     + title
                     + " " * (ceil((length_without_borders - len(title)) / 2) + 1)
-                    + self._border_character
+                    + TABLE_CHARACTER_VERTICAL_BAR
                     + "\n"
                 )
 
             case Justification.RIGHT:
                 title = (
-                    self._border_character
+                    TABLE_CHARACTER_VERTICAL_BAR
                     + " " * (length_without_borders - len(title) + 1)
                     + title
                     + " "
-                    + self._border_character
+                    + TABLE_CHARACTER_VERTICAL_BAR
                     + "\n"
                 )
 
@@ -134,7 +157,7 @@ class PrintTable:
                 # TODO: Raise "Unsupported Justification" Exception
                 raise Exception()
 
-        return self._get_border_row() + title + self._get_border_row()
+        return self._border(TABLE_CHARACTER_TOP_LEFT, TABLE_CHARACTER_TOP_RIGHT, TABLE_CHARACTER_HORIZONTAL_BAR) + title + self._border(TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR, TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR, TABLE_CHARACTER_TOP_SEPARATOR)
 
     def add_row(self, *row: str) -> None:
         """Adds another row to the bottom of the table
@@ -193,7 +216,7 @@ class PrintTable:
         """Returns the current table as a string
 
         Raises:
-            Exception: If there is no data, throws an exception. TODO: Create the actual exception for this.
+            Exception: If there is no data, throws an exception.
 
         Returns:
             str: The currenct table
@@ -202,18 +225,18 @@ class PrintTable:
             # TODO: Throw a "table has no length" exception
             raise Exception
 
-        table = self._get_title_row(self._border_character)
+        table = self._get_title_row()
 
         if self.has_header_row:
-            table += self._get_header(self._rows[0], self._border_character)
+            table += self._get_header(self._rows[0])
 
         for i in range(1 if self.has_header_row else 0, len(self._rows)):
             table += self._rows[i].get_row_as_string(
-                self._border_character,
+                TABLE_CHARACTER_VERTICAL_BAR,
                 [column.max_length for column in self._columns.values()],
             )
 
-        return table + self._get_border_row()
+        return table + self._bottom_border()
 
     def clear_title(self) -> None:
         """Clears the title, by setting it to None"""
