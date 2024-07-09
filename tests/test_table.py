@@ -31,8 +31,6 @@ def test_basic_table():
     )
 
 
-
-
 def test_extra_columns():
     table = PrintTable()
 
