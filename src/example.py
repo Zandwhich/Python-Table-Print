@@ -1,4 +1,4 @@
-from table import PrintTable, Justification
+from python_table_print.table import PrintTable, Justification
 
 # Create a basic table
 

@@ -20,13 +20,13 @@ def test_basic_table():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -41,13 +41,13 @@ def test_extra_columns():
 
     assert (
         table.get_table()
-        == """******************************************************************************
-* Col 1         * Col 2              * Col 3                 * Col 4 * Col 5 *
-******************************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *       *       *
-* Another entry * yay                * an entry in the table *       *       *
-* Fun times     * This is kinda cool * wooow                 *       *       *
-******************************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┬───────┬───────┐
+│ Col 1         │ Col 2              │ Col 3                 │ Col 4 │ Col 5 │
+├───────────────┼────────────────────┼───────────────────────┼───────┼───────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │       │       │
+│ Another entry │ yay                │ an entry in the table │       │       │
+│ Fun times     │ This is kinda cool │ wooow                 │       │       │
+└───────────────┴────────────────────┴───────────────────────┴───────┴───────┘
 """
     )
 
@@ -63,12 +63,12 @@ def test_basic_no_header():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -87,13 +87,13 @@ def test_table_row_right_justification():
 
     assert (
         table.get_table()
-        == """**************************************************************
-*         Col 1 *              Col 2 *                 Col 3 *
-**************************************************************
-*       Entry 1 *     Entry number 2 *          Entry 3 baby *
-* Another entry *                yay * an entry in the table *
-*     Fun times * This is kinda cool *                 wooow *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│         Col 1 │              Col 2 │                 Col 3 │
+├───────────────┼────────────────────┼───────────────────────┤
+│       Entry 1 │     Entry number 2 │          Entry 3 baby │
+│ Another entry │                yay │ an entry in the table │
+│     Fun times │ This is kinda cool │                 wooow │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -110,13 +110,13 @@ def test_table_row_left_justification():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -133,13 +133,13 @@ def test_table_row_centre_justification():
 
     assert (
         table.get_table()
-        == """**************************************************************
-*     Col 1     *       Col 2        *         Col 3         *
-**************************************************************
-*    Entry 1    *   Entry number 2   *     Entry 3 baby      *
-* Another entry *        yay         * an entry in the table *
-*   Fun times   * This is kinda cool *         wooow         *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│     Col 1     │       Col 2        │         Col 3         │
+├───────────────┼────────────────────┼───────────────────────┤
+│    Entry 1    │   Entry number 2   │     Entry 3 baby      │
+│ Another entry │        yay         │ an entry in the table │
+│   Fun times   │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -160,13 +160,13 @@ def test_table_different_row_justification():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-*    Entry 1    *   Entry number 2   *     Entry 3 baby      *
-* Another entry *                yay * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│    Entry 1    │   Entry number 2   │     Entry 3 baby      │
+│ Another entry │                yay │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -185,13 +185,13 @@ def test_table_different_column_justification():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* Col 1         *       Col 2        *                 Col 3 *
-**************************************************************
-* Entry 1       *   Entry number 2   *          Entry 3 baby *
-* Another entry *        yay         * an entry in the table *
-* Fun times     * This is kinda cool *                 wooow *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │       Col 2        │                 Col 3 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │   Entry number 2   │          Entry 3 baby │
+│ Another entry │        yay         │ an entry in the table │
+│ Fun times     │ This is kinda cool │                 wooow │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -215,13 +215,13 @@ def test_table_different_cell_justification():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-*    Entry 1    *   Entry number 2   *          Entry 3 baby *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool *         wooow         *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│    Entry 1    │   Entry number 2   │          Entry 3 baby │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │         wooow         │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -238,15 +238,15 @@ def test_table_with_title_centred():
 
     assert (
         table.get_table()
-        == """**************************************************************
-*                           Title                            *
-**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌────────────────────────────────────────────────────────────┐
+│                           Title                            │
+├───────────────┬────────────────────┬───────────────────────┤
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -263,15 +263,15 @@ def test_table_with_title_left_justified():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* Title                                                      *
-**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌────────────────────────────────────────────────────────────┐
+│ Title                                                      │
+├───────────────┬────────────────────┬───────────────────────┤
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -289,15 +289,15 @@ def test_table_with_title_right_justified():
 
     assert (
         table.get_table()
-        == """**************************************************************
-*                                                      Title *
-**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌────────────────────────────────────────────────────────────┐
+│                                                      Title │
+├───────────────┬────────────────────┬───────────────────────┤
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -316,15 +316,15 @@ def test_table_with_a_very_long_title():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* This is a title that is way, way, way, way, way, way too l *
-**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌────────────────────────────────────────────────────────────┐
+│ This is a title that is way, way, way, way, way, way too l │
+├───────────────┬────────────────────┬───────────────────────┤
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
 
@@ -342,12 +342,12 @@ def test_table_with_a_cleared_title():
 
     assert (
         table.get_table()
-        == """**************************************************************
-* Col 1         * Col 2              * Col 3                 *
-**************************************************************
-* Entry 1       * Entry number 2     * Entry 3 baby          *
-* Another entry * yay                * an entry in the table *
-* Fun times     * This is kinda cool * wooow                 *
-**************************************************************
+        == """┌───────────────┬────────────────────┬───────────────────────┐
+│ Col 1         │ Col 2              │ Col 3                 │
+├───────────────┼────────────────────┼───────────────────────┤
+│ Entry 1       │ Entry number 2     │ Entry 3 baby          │
+│ Another entry │ yay                │ an entry in the table │
+│ Fun times     │ This is kinda cool │ wooow                 │
+└───────────────┴────────────────────┴───────────────────────┘
 """
     )
