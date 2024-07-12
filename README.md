@@ -1,5 +1,9 @@
+[![PyPi Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FZandwhich%2FPython-Table-Print%2Fmaster%2Fpyproject.toml&query=project.version&label=version&color=bright%20green
+)](https://pypi.org/project/python-table-print/) [![codecov](https://img.shields.io/codecov/c/github/Zandwhich/Python-Table-Print
+)](https://app.codecov.io/github/Zandwhich/Python-Table-Print)
+
 # Python Table Print
-A project to dynamically scale and print tables using text in Python
+A lightweight library to create ASCII tables that automaticallly update their spacing based on the input.
 
 # Usage
 
@@ -46,6 +50,7 @@ my_table.add_row("Col 1", "Col 2", "Col 3")
 my_table.add_row("Entry 1", "Entry number 2", "Entry 3 baby")
 my_table.add_row("Another entry", "yay", "an entry in the table")
 my_table.add_row("Fun times", "This is kinda cool", "wooow")
+
 my_table.has_header_row = False
 
 print(my_table.get_table())
