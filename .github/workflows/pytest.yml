@@ -23,6 +23,10 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run Pytest
         run: pytest
+      - name: Re-run Tests with Coverage
+        run: coverage run -m pytest
+      - name: Visualize Coverage
+        run: coverage report
       - name: Upload Coverage Reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
