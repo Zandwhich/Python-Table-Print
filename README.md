@@ -1,7 +1,6 @@
 [![PyPi Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FZandwhich%2FPython-Table-Print%2Fmaster%2Fpyproject.toml&query=project.version&label=version&color=bright%20green&logo=pypi
 )](https://pypi.org/project/python-table-print/)
 ![python version](https://img.shields.io/pypi/pyversions/python-table-print?logo=python)
-
 [![downloads](https://img.shields.io/pypi/dm/python-table-print?logo=pypi)](https://pypi.org/project/python-table-print/)
 [![codecov](https://img.shields.io/codecov/c/github/Zandwhich/Python-Table-Print?logo=codecov)](https://app.codecov.io/github/Zandwhich/Python-Table-Print)
 
