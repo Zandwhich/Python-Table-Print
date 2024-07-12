@@ -1,6 +1,5 @@
 [![PyPi Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FZandwhich%2FPython-Table-Print%2Fmaster%2Fpyproject.toml&query=project.version&label=version&color=bright%20green
-)](https://pypi.org/project/python-table-print/) [![codecov](https://img.shields.io/codecov/c/github/Zandwhich/Python-Table-Print
-)](https://app.codecov.io/github/Zandwhich/Python-Table-Print)
+)](https://pypi.org/project/python-table-print/) [![codecov](https://img.shields.io/codecov/c/github/Zandwhich/Python-Table-Print?logo=codecov)](https://app.codecov.io/github/Zandwhich/Python-Table-Print)
 
 # Python Table Print
 A lightweight library to create ASCII tables that automaticallly update their spacing based on the input.
