@@ -40,7 +40,8 @@ class PrintTable:
 
         for column in self._columns.values():
             border += (
-                TABLE_CHARACTER_HORIZONTAL_BAR * (column.max_length + 2 if column.max_length > 0 else 1)
+                TABLE_CHARACTER_HORIZONTAL_BAR
+                * (column.max_length + 2 if column.max_length > 0 else 1)
                 + separator_char
             )
 

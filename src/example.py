@@ -91,4 +91,3 @@ my_nearly_empty_table.set_title("Title")
 
 print("Nearly empty table\n")
 print(my_nearly_empty_table.get_table())
-
