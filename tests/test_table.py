@@ -351,3 +351,25 @@ def test_table_with_a_cleared_title():
 └───────────────┴────────────────────┴───────────────────────┘
 """
     )
+
+def test_empty_rows_and_columns():
+    table = PrintTable()
+    
+    table.add_row("Not Empty", "", "", "", "")
+    table.add_row("", "", "", "", "")
+    table.add_row("", "", "", "", "")
+    
+    table.set_title("Title")
+    
+    assert (
+        table.get_table()
+        == """┌───────────────────┐
+│       Title       │
+├───────────┬─┬─┬─┬─┤
+│ Not Empty │ │ │ │ │
+├───────────┼─┼─┼─┼─┤
+│           │ │ │ │ │
+│           │ │ │ │ │
+└───────────┴─┴─┴─┴─┘
+"""
+    )

@@ -81,3 +81,14 @@ my_table.clear_title()
 print("Table With Cleared Title\n")
 print(my_table.get_table())
 print("\n\n")
+
+my_nearly_empty_table = PrintTable()
+
+my_nearly_empty_table.add_row("Not Empty", "", "", "", "")
+my_nearly_empty_table.add_row("", "", "", "", "")
+my_nearly_empty_table.add_row("", "", "", "", "")
+my_nearly_empty_table.set_title("Title")
+
+print("Nearly empty table\n")
+print(my_nearly_empty_table.get_table())
+
