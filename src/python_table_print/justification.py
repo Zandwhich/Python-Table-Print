@@ -8,5 +8,6 @@ class Justification(Enum):
     CENTRE = 1
     RIGHT = 2
 
+
 class UnknownJustification(Exception):
     pass
