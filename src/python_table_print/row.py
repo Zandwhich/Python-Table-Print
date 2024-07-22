@@ -19,6 +19,11 @@ class Row:
             justification (Justification | None): The justification to set the cells to. If `None` is passed in, it sets the justificaiton to the default,
             which currently is the right justification.
         """
+        if (not justification == None) and (
+            justification
+            not in [Justification.LEFT, Justification.CENTRE, Justification.RIGHT]
+        ):
+            raise Exception
         for cell in self.cells.values():
             cell.justification = justification
 
