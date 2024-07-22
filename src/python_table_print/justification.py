@@ -7,3 +7,6 @@ class Justification(Enum):
     LEFT = 0
     CENTRE = 1
     RIGHT = 2
+
+class UnknownJustification(Exception):
+    pass

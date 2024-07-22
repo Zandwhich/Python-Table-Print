@@ -1,5 +1,5 @@
 from math import ceil, floor
-from .justification import Justification
+from .justification import Justification, UnknownJustification
 from .column import Column
 from .row import Row
 
@@ -22,6 +22,9 @@ TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR = "├"
 TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR = "┤"
 TABLE_CHARACTER_MIDDLE_SEPARATOR = "┼"
 
+class TableExcpetion(Exception):
+    pass
+
 
 class PrintTable:
     """The table itself. More documentation to come!"""
@@ -29,7 +32,6 @@ class PrintTable:
     def __init__(self) -> None:
         self.has_header_row: bool = True
 
-        # TODO: Is a dictionary whose keys are ints essentially a list in Python?
         self._columns: dict[int, Column] = {}
         self._rows: dict[int, Row] = {}
         self._title: str | None = None
@@ -121,8 +123,7 @@ class PrintTable:
     def _get_title_row(self) -> str:
         """Creates the title row for the table if the title is set. Otherwise returns just the top border row
 
-        NOTE: For now, we will cut off the title if it's too long. This will be fixed in GitHub Issue #61
-        TODO: Address the above
+        NOTE: If the title is too long, it will be cut off
 
         Args:
             border_character (str): The border character
@@ -171,8 +172,7 @@ class PrintTable:
                 )
 
             case _:
-                # TODO: Raise "Unsupported Justification" Exception
-                raise Exception()
+                raise UnknownJustification()
 
         return (
             self._border(
@@ -251,8 +251,7 @@ class PrintTable:
             str: The currenct table
         """
         if len(self._rows) == 0:
-            # TODO: Throw a "table has no length" exception
-            raise Exception
+            raise TableExcpetion
 
         table = self._get_title_row()
 

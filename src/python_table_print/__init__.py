@@ -1,2 +1,2 @@
-from .table import PrintTable
-from .justification import Justification
+from .table import PrintTable, TableExcpetion
+from .justification import Justification, UnknownJustification

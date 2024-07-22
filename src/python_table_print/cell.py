@@ -1,5 +1,5 @@
 from math import ceil, floor
-from .justification import Justification
+from .justification import Justification, UnknownJustification
 
 
 class Cell:
@@ -88,6 +88,5 @@ class Cell:
             case Justification.RIGHT:
                 return self._print_as_right_justified(max_length, border_character)
 
-            # TODO: Raise an "Unknown Justification" exception
             case _:
-                raise Exception()
+                raise UnknownJustification
