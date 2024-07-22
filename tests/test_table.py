@@ -85,9 +85,9 @@ def test_table_row_right_justification():
     table.add_row("Entry 1", "Entry number 2", "Entry 3 baby")
     table.add_row("Another entry", "yay", "an entry in the table")
     table.add_row("Fun times", "This is kinda cool", "wooow")
-    
+
     table.set_table_justification(Justification.RIGHT)
-    
+
     with pytest.raises(Exception):
         table.set_table_justification("Something wrong")  # type: ignore
 
@@ -358,27 +358,31 @@ def test_table_with_a_cleared_title():
 """
     )
 
+
 def test_incorrect_title_justificion():
     table = PrintTable()
-    
+
     table.add_row("this", "is", "my", "row")
     table.set_title("This is my title")
-    
+
     table._title_justification = "Overwriting the title justification with an erroneous value"  # type: ignore
-    
+
     with pytest.raises(Exception):
         table.get_table()
+
 
 # Other tests/errors
 
+
 def test_incorrect_cell_justifcation():
     table = PrintTable()
-    
+
     table.add_row("a single entry")
     table._rows[0].cells[0].justification = "This is a wrong justification"  # type: ignore
-    
+
     with pytest.raises(Exception):
         table.get_table()
+
 
 def test_empty_rows_and_columns():
     table = PrintTable()
@@ -402,8 +406,9 @@ def test_empty_rows_and_columns():
 """
     )
 
+
 def test_no_table():
     table = PrintTable()
-    
+
     with pytest.raises(Exception):
         table.get_table()
