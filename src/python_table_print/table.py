@@ -2,6 +2,7 @@ from math import ceil, floor
 from .justification import Justification, UnknownJustification
 from .column import Column
 from .row import Row
+from .table_exception import TableException
 
 
 BASE_BORDER = "*"
@@ -21,10 +22,6 @@ TABLE_CHARACTER_BOTTOM_SEPARATOR = "┴"
 TABLE_CHARACTER_MIDDLE_LEFT_SEPARATOR = "├"
 TABLE_CHARACTER_MIDDLE_RIGHT_SEPARATOR = "┤"
 TABLE_CHARACTER_MIDDLE_SEPARATOR = "┼"
-
-
-class TableExcpetion(Exception):
-    pass
 
 
 class PrintTable:
@@ -252,7 +249,7 @@ class PrintTable:
             str: The currenct table
         """
         if len(self._rows) == 0:
-            raise TableExcpetion
+            raise TableException
 
         table = self._get_title_row()
 
