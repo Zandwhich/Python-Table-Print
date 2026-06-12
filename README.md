@@ -113,6 +113,3 @@ my_table.set_title_justification(Justification.LEFT)
 ## License
 
 [MIT](LICENSE)
-
-This was made as a way to learn how to publish projects to PyPi. No AI was used in the making of this project, except
-for this README.
