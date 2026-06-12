@@ -393,9 +393,7 @@ def test_empty_rows_and_columns():
 
     table.set_title("Title")
 
-    assert (
-        table.get_table()
-        == """┌───────────────────┐
+    assert table.get_table() == """┌───────────────────┐
 │       Title       │
 ├───────────┬─┬─┬─┬─┤
 │ Not Empty │ │ │ │ │
@@ -404,7 +402,6 @@ def test_empty_rows_and_columns():
 │           │ │ │ │ │
 └───────────┴─┴─┴─┴─┘
 """
-    )
 
 
 def test_no_table():

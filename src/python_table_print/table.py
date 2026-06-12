@@ -4,7 +4,6 @@ from .column import Column
 from .row import Row
 from .table_exception import TableException
 
-
 BASE_BORDER = "*"
 
 # Table Characters
